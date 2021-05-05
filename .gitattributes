@@ -25,3 +25,4 @@ copy/*.bms zos-working-tree-encoding=IBM-1047 git-encoding=utf-8
 cobol/*.cbl zos-working-tree-encoding=IBM-1047 git-encoding=utf-8
 copy/*.cpy zos-working-tree-encoding=IBM-1047 git-encoding=utf-8
 copy/*.bms zos-working-tree-encoding=IBM-1047 git-encoding=utf-8
+jcl/*.jcl zos-working-tree-encoding=IBM-1047 git-encoding=utf-8

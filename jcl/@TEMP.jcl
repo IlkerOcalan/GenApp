@@ -1,0 +1,29 @@
+//GENADB2 JOB 241901,'DB2 create',NOTIFY=&SYSUID,CLASS=A,MSGCLASS=H
+//*
+//JOBLIB   DD DSN=SYS2.DB2.V910.SDSNLOAD,DISP=SHR
+//*
+//CRTABS  EXEC PGM=IKJEFT01,DYNAMNBR=20
+//SYSTSPRT DD SYSOUT=*
+//SYSTSIN  DD *
+ DSN SYSTEM(DHM1)
+ RUN  PROGRAM(DSNTIAD) PLAN(DSNTIA91) -
+      LIB('DSN910PM.RUNLIB.LOAD')
+//SYSPRINT DD SYSOUT=*
+//SYSUDUMP DD SYSOUT=*
+//SYSIN    DD *
+  SET CURRENT SQLID='STTESTER' ;
+CREATE TABLE GENASA1.xxxxxxxxx (
+    policyNumber   INTEGER NOT NULL,
+    equities       CHAR(1),
+    withProfits    CHAR(1),
+     managedFund    CHAR(1),
+    fundName       CHAR(10),
+    term           SMALLINT,
+    sumAssured     INTEGER,
+    lifeAssured    CHAR(31),
+    paddingData    VARCHAR(32606),
+    PRIMARY KEY(policyNumber),
+   FOREIGN KEY(policyNumber)
+     REFERENCES GENASA1.policy (policyNumber) ON DELETE CASCADE)
+       CCSID EBCDIC
+   IN GENASA1.GENATS03

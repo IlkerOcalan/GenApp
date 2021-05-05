@@ -1,0 +1,38 @@
+//GENACSD JOB 241901,'CSD GENERATE',NOTIFY=&SYSUID,CLASS=A,MSGCLASS=H
+//*
+//* LICENSED MATERIALS - PROPERTY OF IBM
+//*
+//* "RESTRICTED MATERIALS OF IBM"
+//*
+//* CB12
+//*
+//* (C) COPYRIGHT IBM CORP. 2011, 2013 ALL RIGHTS RESERVED
+//*
+//*  US GOVERNMENT USERS RESTRICTED RIGHTS - USE, DUPLICATION,
+//*  OR DISCLOSURE RESTRICTED BY GSA ADP SCHEDULE
+//*  CONTRACT WITH IBM CORPORATION
+//*
+//*****
+//***** CSD definitions for TOR-AOR-DOR configuration
+//*****
+//CSDDEFS  EXEC PGM=DFHCSDUP,REGION=1M
+//STEPLIB  DD DISP=SHR,DSN=DFH550.CICS.SDFHLOAD
+//DFHCSD   DD DSN=DFH550.CICS.DFHCSD,DISP=SHR
+//SYSUT1   DD UNIT=SYSDA,SPACE=(1024,(100,100))
+//SYSPRINT DD SYSOUT=*
+//SYSIN    DD *
+**********************************************************
+Remove Group(GENATORT)    List(TORLIST)
+Remove Group(GENATORP)    List(TORLIST)
+Remove Group(GENAAORP)    List(AORLIST)
+Remove Group(GENADORP)    List(DORLIST)
+Remove Group(GENADORD)    List(DORLIST)
+Remove Group(GENA)        List(TORLIST)
+Remove Group(GENA)        List(AORLIST)
+Remove Group(GENA)        List(DORLIST)
+Delete Group(GENATORT) All
+Delete Group(GENATORP) All
+Delete Group(GENAAORP) All
+Delete Group(GENADORP) All
+Delete Group(GENADORD) All
+Delete Group(GENA)     All
