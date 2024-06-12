@@ -1,23 +1,10 @@
       ******************************************************************
       *                                                                *
-      * LICENSED MATERIALS - PROPERTY OF IBM                           *
-      *                                                                *
-      * "RESTRICTED MATERIALS OF IBM"                                  *
-      *                                                                *
-      * CB12                                                           *
-      *                                                                *
-      * (C) COPYRIGHT IBM CORP. 2011, 2013 ALL RIGHTS RESERVED         *
-      *                                                                *
-      * US GOVERNMENT USERS RESTRICTED RIGHTS - USE, DUPLICATION,      *
-      * OR DISCLOSURE RESTRICTED BY GSA ADP SCHEDULE                   *
-      * CONTRACT WITH IBM CORPORATION                                  *
-      *                                                                *
+      * (C) Copyright IBM Corp. 2011, 2020                             *
       *                                                                *
       *                    ADD Customer                                *
       *                                                                *
       * VSAM KSDS Customer record ADD                                  *
-      *                                                                *
-      *                                                                *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -58,6 +45,8 @@
        01  CA-ERROR-MSG.
            03 FILLER                   PIC X(9)  VALUE 'COMMAREA='.
            03 CA-DATA                  PIC X(90) VALUE SPACES.
+       
+       01  CUSTOMER-RECORD-SIZE        PIC S9(4) BINARY VALUE 0225.
 
       *****************************************************************
       *    L I N K A G E     S E C T I O N
@@ -78,7 +67,7 @@
       *---------------------------------------------------------------*
            Exec CICS Write File('KSDSCUST')
                      From(CA-Customer-Num)
-                     Length(WS-Commarea-Len)
+                     Length(CUSTOMER-RECORD-SIZE)
                      Ridfld(CA-Customer-Num)
                      KeyLength(10)
                      RESP(WS-RESP)

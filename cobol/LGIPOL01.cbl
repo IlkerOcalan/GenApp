@@ -1,23 +1,12 @@
       ******************************************************************
       *                                                                *
-      * LICENSED MATERIALS - PROPERTY OF IBM                           *
-      *                                                                *
-      * "RESTRICTED MATERIALS OF IBM"                                  *
-      *                                                                *
-      * CB12                                                           *
-      *                                                                *
-      * (C) COPYRIGHT IBM CORP. 2011, 2013 ALL RIGHTS RESERVED         *
-      *                                                                *
-      * US GOVERNMENT USERS RESTRICTED RIGHTS - USE, DUPLICATION,      *
-      * OR DISCLOSURE RESTRICTED BY GSA ADP SCHEDULE                   *
-      * CONTRACT WITH IBM CORPORATION                                  *
-      *                                                                *
+      * (C) Copyright IBM Corp. 2011, 2020                             *
       *                                                                *
       *                    Inquire Policy                              *
+      *                                                                *
       *  Business logic for policy inquire                             *
       *   To obtain full details of an individual policy:              *
       *     Endowment, House or Motor                                  *
-      *                                                                *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -54,35 +43,17 @@
            03 FILLER                   PIC X     VALUE SPACES.
            03 EM-TIME                  PIC X(6)  VALUE SPACES.
            03 FILLER                   PIC X(9)  VALUE ' LGIPOL01'.
-           03 EM-VARIABLE.
-             05 FILLER                 PIC X(6)  VALUE ' CNUM='.
-             05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
-             05 FILLER                 PIC X(6)  VALUE ' PNUM='.
-             05 EM-POLNUM              PIC X(10)  VALUE SPACES.
-             05 EM-SQLREQ              PIC X(16) VALUE SPACES.
-             05 FILLER                 PIC X(9)  VALUE ' SQLCODE='.
-             05 EM-SQLRC               PIC +9(5) USAGE DISPLAY.
+           03 EM-VARIABLE              PIC X(21) VALUE SPACES.
 
        01  CA-ERROR-MSG.
            03 FILLER                   PIC X(9)  VALUE 'COMMAREA='.
            03 CA-DATA                  PIC X(90) VALUE SPACES.
       *----------------------------------------------------------------*
-       01 MINUS-ONE                    PIC S9(4) COMP VALUE -1.
 
-       01  WS-COMMAREA-LENGTHS.
-           03 WS-CA-HEADERTRAILER-LEN  PIC S9(4) COMP VALUE +33.
-           03 WS-REQUIRED-CA-LEN       PIC S9(4)      VALUE +0.
-      *
-       01  END-POLICY-POS              PIC S9(4) COMP VALUE +1.
        01 LGIPDB01                     PIC x(8) Value 'LGIPDB01'.
       *----------------------------------------------------------------*
              COPY LGPOLICY.
-      *
-       77  IND-BROKERID                PIC S9(4) COMP.
-       77  IND-BROKERSREF              PIC S9(4) COMP.
-       77  IND-PAYMENT                 PIC S9(4) COMP.
-       77  IND-E-PADDINGDATA           PIC S9(4) COMP.
-       77  IND-E-PADDINGDATAL          PIC S9(4) COMP.
+
       *----------------------------------------------------------------*
       ******************************************************************
       *    L I N K A G E     S E C T I O N
@@ -116,12 +87,10 @@
            MOVE EIBCALEN TO WS-CALEN.
            SET WS-ADDR-DFHCOMMAREA TO ADDRESS OF DFHCOMMAREA.
       *
-           MOVE CA-CUSTOMER-NUM TO EM-CUSNUM
-           MOVE CA-POLICY-NUM   TO EM-POLNUM
 
            EXEC CICS LINK Program(LGIPDB01)
                Commarea(DFHCOMMAREA)
-               Length(32000)
+               Length(32500)
            END-EXEC.
 
            EXEC CICS RETURN END-EXEC.

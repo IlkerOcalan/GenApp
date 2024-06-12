@@ -1,23 +1,12 @@
+       PROCESS SQL
       ******************************************************************
       *                                                                *
-      * LICENSED MATERIALS - PROPERTY OF IBM                           *
-      *                                                                *
-      * "RESTRICTED MATERIALS OF IBM"                                  *
-      *                                                                *
-      * CB12                                                           *
-      *                                                                *
-      * (C) COPYRIGHT IBM CORP. 2011, 2013 ALL RIGHTS RESERVED         *
-      *                                                                *
-      * US GOVERNMENT USERS RESTRICTED RIGHTS - USE, DUPLICATION,      *
-      * OR DISCLOSURE RESTRICTED BY GSA ADP SCHEDULE                   *
-      * CONTRACT WITH IBM CORPORATION                                  *
-      *                                                                *
+      * (C) Copyright IBM Corp. 2011, 2021                             *
       *                                                                *
       *                    DELETE Policy                               *
       *                                                                *
       *  Appropriate row will be deleted from DB2 Policy and the       *
       *  Endowment/House/Motor/Commercial table.                       *
-      *                                                                *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -53,7 +42,7 @@
            03 EM-DATE                  PIC X(8)  VALUE SPACES.
            03 FILLER                   PIC X     VALUE SPACES.
            03 EM-TIME                  PIC X(6)  VALUE SPACES.
-           03 FILLER                   PIC X(9)  VALUE ' LGDPOL01'.
+           03 FILLER                   PIC X(9)  VALUE ' LGDPDB01'.
            03 EM-VARIABLE.
              05 FILLER                 PIC X(6)  VALUE ' CNUM='.
              05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
@@ -101,13 +90,25 @@
            EXEC SQL
              INCLUDE SQLCA
            END-EXEC.
+      * policy table
+           EXEC SQL
+             INCLUDE POLICY
+           END-EXEC.
+      * commercial table
+           EXEC SQL
+             INCLUDE COMMERCL
+           END-EXEC.
+      * motor table
+           EXEC SQL
+             INCLUDE MOTOR
+           END-EXEC.
 
       ******************************************************************
       *    L I N K A G E     S E C T I O N
       ******************************************************************
        LINKAGE SECTION.
 
-       01  DFHCOMMAREA.
+       01  DFHCOMMAREA external.
            EXEC SQL
              INCLUDE LGCMAREA
            END-EXEC.

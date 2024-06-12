@@ -1,0 +1,30 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. ASMCALL2.
+      *
+       ENVIRONMENT DIVISION.
+      *
+       DATA DIVISION.
+          WORKING-STORAGE SECTION.
+
+       01 DFHCOMMAREA.
+          03 PGM-TOCALL-ID  PIC 9(4).
+          03 PGM-DATA       PIC X(100).
+
+       PROCEDURE DIVISION.
+
+           INITIALIZE PGM-DATA.
+
+      * Perform calls based on program IDs 1,2,3 and 4
+           MOVE 0001 TO PGM-TOCALL-ID.
+           CALL 'ASMMOD2' USING PGM-TOCALL-ID
+
+           MOVE 0002 TO PGM-TOCALL-ID.
+           CALL 'ASMMOD2' USING PGM-TOCALL-ID
+
+           MOVE 0003 TO PGM-TOCALL-ID.
+           CALL 'ASMMOD2' USING PGM-TOCALL-ID
+
+           MOVE 0004 TO PGM-TOCALL-ID.
+           CALL 'ASMMOD2' USING PGM-TOCALL-ID
+           MOVE 0005 TO PGM-TOCALL-ID.
+           CALL 'ASMMOD2' USING PGM-TOCALL-ID.

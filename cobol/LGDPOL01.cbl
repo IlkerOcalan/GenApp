@@ -1,23 +1,10 @@
       ******************************************************************
       *                                                                *
-      * LICENSED MATERIALS - PROPERTY OF IBM                           *
-      *                                                                *
-      * "RESTRICTED MATERIALS OF IBM"                                  *
-      *                                                                *
-      * CB12                                                           *
-      *                                                                *
-      * (C) COPYRIGHT IBM CORP. 2011, 2013 ALL RIGHTS RESERVED         *
-      *                                                                *
-      * US GOVERNMENT USERS RESTRICTED RIGHTS - USE, DUPLICATION,      *
-      * OR DISCLOSURE RESTRICTED BY GSA ADP SCHEDULE                   *
-      * CONTRACT WITH IBM CORPORATION                                  *
-      *                                                                *
+      * (C) Copyright IBM Corp. 2011, 2020                             *
       *                                                                *
       *                    DELETE Policy                               *
       *                                                                *
       *  Delete policy business logic                                  *
-      *                                                                *
-      *                                                                *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -54,14 +41,7 @@
            03 FILLER                   PIC X     VALUE SPACES.
            03 EM-TIME                  PIC X(6)  VALUE SPACES.
            03 FILLER                   PIC X(9)  VALUE ' LGDPOL01'.
-           03 EM-VARIABLE.
-             05 FILLER                 PIC X(6)  VALUE ' CNUM='.
-             05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
-             05 FILLER                 PIC X(6)  VALUE ' PNUM='.
-             05 EM-POLNUM              PIC X(10)  VALUE SPACES.
-             05 EM-SQLREQ              PIC X(16) VALUE SPACES.
-             05 FILLER                 PIC X(9)  VALUE ' SQLCODE='.
-             05 EM-SQLRC               PIC +9(5) USAGE DISPLAY.
+           03 EM-VARIABLE              PIC X(21) VALUE SPACES.
 
        01  CA-ERROR-MSG.
            03 FILLER                   PIC X(9)  VALUE 'COMMAREA='.
@@ -77,7 +57,6 @@
            03 WS-CA-HEADER-LEN          PIC S9(4) COMP VALUE +28.
 
        01 LGDPDB01                  PIC x(8) Value 'LGDPDB01'.
-       01 LGDPVS01                  PIC x(8) Value 'LGDPVS01'.
       *----------------------------------------------------------------*
 
       ******************************************************************
@@ -130,10 +109,6 @@
              EXEC CICS RETURN END-EXEC
            END-IF
 
-      * and save in error msg field incase required
-           MOVE CA-CUSTOMER-NUM TO EM-CUSNUM
-           MOVE CA-POLICY-NUM   TO EM-POLNUM
-
       *----------------------------------------------------------------*
       * Check request-id in commarea and if recognised ...             *
       * Call routine to delete row from policy table                   *
@@ -152,7 +127,6 @@
                If CA-RETURN-CODE > 0
                  EXEC CICS RETURN END-EXEC
                End-if
-      *        PERFORM DELETE-POLICY-VSAM
            END-IF
 
       * Return to caller
@@ -168,24 +142,8 @@
                 Commarea(DFHCOMMAREA)
                 LENGTH(32500)
            END-EXEC.
-      **********
-      *    EXEC CICS LINK PROGRAM('LGASTAT1')
-      *              COMMAREA(DFHCOMMAREA)
-      *              LENGTH(32500)
-      *    END-EXEC
-      **********
 
            EXIT.
-
-
-      *DELETE-POLICY-VSAM.
-      *
-      *    EXEC CICS LINK PROGRAM(LGDPVS01)
-      *         Commarea(DFHCOMMAREA)
-      *         LENGTH(32500)
-      *    END-EXEC.
-      *
-      *    EXIT.
 
 
       *================================================================*

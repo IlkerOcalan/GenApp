@@ -1,23 +1,6 @@
       ******************************************************************
       *                                                                *
-      * LICENSED MATERIALS - PROPERTY OF IBM                           *
-      *                                                                *
-      * "RESTRICTED MATERIALS OF IBM"                                  *
-      *                                                                *
-      * CB12                                                           *
-      *                                                                *
-      * (C) COPYRIGHT IBM CORP. 2011, 2013 ALL RIGHTS RESERVED         *
-      *                                                                *
-      * US GOVERNMENT USERS RESTRICTED RIGHTS - USE, DUPLICATION,      *
-      * OR DISCLOSURE RESTRICTED BY GSA ADP SCHEDULE                   *
-      * CONTRACT WITH IBM CORPORATION                                  *
-      *                                                                *
-      *                                                                *
-      *                                                                *
-      *                                                                *
-      *                                                                *
-      *                                                                *
-      *                                                                *
+      * (C) Copyright IBM Corp. 2011, 2020                             *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.

@@ -1,23 +1,11 @@
+       PROCESS SQL
       ******************************************************************
       *                                                                *
-      * LICENSED MATERIALS - PROPERTY OF IBM                           *
-      *                                                                *
-      * "RESTRICTED MATERIALS OF IBM"                                  *
-      *                                                                *
-      * CB12                                                           *
-      *                                                                *
-      * (C) COPYRIGHT IBM CORP. 2011, 2013 ALL RIGHTS RESERVED         *
-      *                                                                *
-      * US GOVERNMENT USERS RESTRICTED RIGHTS - USE, DUPLICATION,      *
-      * OR DISCLOSURE RESTRICTED BY GSA ADP SCHEDULE                   *
-      * CONTRACT WITH IBM CORPORATION                                  *
-      *                                                                *
+      * (C) Copyright IBM Corp. 2011, 2021                             *
       *                                                                *
       *                    Inquire Customer                            *
       *                                                                *
       * Select customer details from DB2 table                         *
-      *                                                                *
-      *                                                                *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -57,8 +45,6 @@
            03 EM-VARIABLE.
              05 FILLER                 PIC X(6)  VALUE ' CNUM='.
              05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
-             05 FILLER                 PIC X(6)  VALUE ' PNUM='.
-             05 EM-POLNUM              PIC X(10)  VALUE SPACES.
              05 EM-SQLREQ              PIC X(16) VALUE SPACES.
              05 FILLER                 PIC X(9)  VALUE ' SQLCODE='.
              05 EM-SQLRC               PIC +9(5) USAGE DISPLAY.
@@ -66,6 +52,7 @@
        01 CA-ERROR-MSG.
            03 FILLER                PIC X(9)  VALUE 'COMMAREA='.
            03 CA-DATA               PIC X(90) VALUE SPACES.
+       
       *----------------------------------------------------------------*
       * Fields to be used to calculate if commarea is large enough
        01  WS-COMMAREA-LENGTHS.

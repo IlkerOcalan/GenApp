@@ -1,23 +1,10 @@
       ******************************************************************
       *                                                                *
-      * LICENSED MATERIALS - PROPERTY OF IBM                           *
-      *                                                                *
-      * "RESTRICTED MATERIALS OF IBM"                                  *
-      *                                                                *
-      * CB12                                                           *
-      *                                                                *
-      * (C) COPYRIGHT IBM CORP. 2011, 2013 ALL RIGHTS RESERVED         *
-      *                                                                *
-      * US GOVERNMENT USERS RESTRICTED RIGHTS - USE, DUPLICATION,      *
-      * OR DISCLOSURE RESTRICTED BY GSA ADP SCHEDULE                   *
-      * CONTRACT WITH IBM CORPORATION                                  *
-      *                                                                *
+      * (C) Copyright IBM Corp. 2011, 2020                             *
       *                                                                *
       *                    DELETE Policy                               *
       *                                                                *
       * VSAM KSDS Policy record DELETE                                 *
-      *                                                                *
-      *                                                                *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -119,7 +106,8 @@
       *
            MOVE WS-DATE TO EM-DATE
            MOVE WS-TIME TO EM-TIME
-           Move CA-Customer-Num To EM-Cusnum
+           Move CA-Customer-Num To EM-CUSNUM 
+           Move CA-POLICY-NUM To EM-POLNUM 
            Move WS-RESP         To EM-RespRC
            Move WS-RESP2        To EM-Resp2RC
            EXEC CICS LINK PROGRAM('LGSTSQ')

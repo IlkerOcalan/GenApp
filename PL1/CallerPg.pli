@@ -1,0 +1,102 @@
+/*PROGRAM TO READ FROM A FILE AND GENERATE A REPORT                  */
+ /*********************************************************************/
+ /*    PROGRAM NAME : CALLERPG                                         */
+ /*    DESCRIPTION  : THIS PROGRAM READS RECORDS FROM A FILE ONE BY   */
+ /*                   ONE AND GENERATES A REPORT WITH STANDARD HEADER */
+ /*                   AND FOOTER AND ALSO TAKES CARE OF INCREASING    */
+ /*                   LINE NUMBERS IN THE REPORT                      */
+ /*********************************************************************/
+ CALLERPG:PROCEDURE OPTIONS(MAIN);                                       
+    DCL DATETIMEVAR  CHAR (17)     INIT(' ');                           
+    DCL EOUT_LC      FIXED DEC (3) INIT (0);                           
+    DCL INREC                      CHAR (80);                           
+    DCL MORE_RECORDS BIT (1);                                           
+    DCL NO           BIT (1) INITIAL('0'B);                             
+    DCL YES          BIT (1) INITIAL('1'B);                             
+                                                                       
+    DCL 1 PAGENUM       FIXED DEC (3) INIT (1);                         
+    DCL 1 PAGELN,                                          /* PAGE NO */
+          2 FILLER      CHAR (60)     INIT (' '),                       
+          2 PAGESHOW    CHAR (17)     INIT ('PAGE    :        '),       
+          2 PAGEDISP    PIC 'ZZ9'     INIT (1);                         
+                                                                       
+    DCL 1 DATELN,                                         /* RUN DATE */
+          2 FILLER      CHAR (60)   INIT (' '),                         
+          2 DATESHOW    CHAR (10)   INIT ('RUN DATE: '),               
+          2 DATEDISP    CHAR (10)   INIT ('  /  /    ');               
+                                                                       
+    DCL 1 TIMELN,                                         /* RUN TIME */
+          2 FILLER      CHAR (60)   INIT (' '),                         
+          2 TIMESHOW    CHAR (12)   INIT ('RUN TIME:   '),             
+          2 TIMEDISP    CHAR (08)   INIT ('  :  :  ');                 
+                                                                       
+    DCL 1 PGMSHOW,                                                     
+          2 FILLER1     CHAR (60)   INIT (' '),                         
+          2 FILLER2     CHAR (20)   INIT ('PROGRAM :    CALLERPG');     
+                                                                       
+    DCL 1 ENDRPRTLN,                                 /* END OF REPORT */
+          2 FILLER1     CHAR (30)   INIT (' '),                         
+          2 FILLER2     CHAR (25)   INIT ('***** END OF REPORT ****'), 
+          2 FILLER3     CHAR (25)   INIT (' ');                         
+                                                                       
+    DCL   BLANKLN       CHAR (80)   INIT (' ');                         
+                                                                       
+    DCL 1 HEADERLN,                                                     
+          2 FILLER1  CHAR (20) INIT (' '),                             
+          2 FILLER2  CHAR (35) INIT ('    SUMMARY REPORT FOR OCTOBER'),
+          2 FILLER3  CHAR (25) INIT (' ');                             
+                                                                       
+    DCL DATETIME BUILTIN,                                               
+         SUBSTR  BUILTIN;                                               
+    DCL INP FILE RECORD INPUT,                                         
+        OUT FILE RECORD OUTPUT;                                         
+         ON ENDFILE(INP)                                               
+            MORE_RECORDS = NO;                                         
+            CLOSE FILE(INP);                                           
+         ON ENDFILE(OUT)                                               
+            CLOSE FILE(OUT);                                           
+                                                                       
+    MORE_RECORDS = YES;                                                 
+    OPEN FILE (INP);                                                   
+    OPEN FILE (OUT);                                                   
+         READ FILE (INP) INTO (INREC);                                 
+         DATETIMEVAR = DATETIME;                                       
+         PUT SKIP LIST('DATETIMEVAR',DATETIMEVAR);                     
+         SUBSTR(DATEDISP,7,4) = SUBSTR(DATETIMEVAR,1,4);               
+         SUBSTR(DATEDISP,1,2) = SUBSTR(DATETIMEVAR,5,2);               
+         SUBSTR(DATEDISP,4,2) = SUBSTR(DATETIMEVAR,7,2);               
+         SUBSTR(TIMEDISP,1,2) = SUBSTR(DATETIMEVAR,9,2);               
+         SUBSTR(TIMEDISP,4,2) = SUBSTR(DATETIMEVAR,11,2);               
+         SUBSTR(TIMEDISP,7,2) = SUBSTR(DATETIMEVAR,13,2);               
+         CALL CALLEDPG;                                             
+                                                                       
+    DO WHILE(MORE_RECORDS);                                             
+         WRITE FILE (OUT) FROM (INREC);                                 
+         IF EOUT_LC >= 55                                               
+            THEN DO;                                                   
+                   EOUT_LC  = 0;                                       
+                   PAGENUM  = PAGENUM + 1;                             
+                   PAGEDISP = PAGENUM;                                 
+                   CALL HEADER_PROC;                                   
+                 END;                                                   
+         EOUT_LC = EOUT_LC + 1;                                         
+         READ FILE (INP) INTO (INREC);                                 
+    END;                                                               
+                                                                       
+         WRITE FILE (OUT) FROM (BLANKLN);                               
+         WRITE FILE (OUT) FROM (ENDRPRTLN);                             
+         CLOSE FILE(INP);                                               
+         CLOSE FILE(OUT);                                               
+                                                                       
+ HEADER_PROC: PROC;                                                     
+         WRITE FILE (OUT) FROM (PAGELN);                               
+         WRITE FILE (OUT) FROM (DATELN);                               
+         WRITE FILE (OUT) FROM (TIMELN);                               
+         WRITE FILE (OUT) FROM (PGMSHOW);                               
+         WRITE FILE (OUT) FROM (BLANKLN);                               
+         WRITE FILE (OUT) FROM (HEADERLN);                             
+         WRITE FILE (OUT) FROM (BLANKLN);                               
+         EOUT_LC = EOUT_LC + 7;                                         
+ END HEADER_PROC;                                                       
+                                                                       
+ END CALLERPG;       

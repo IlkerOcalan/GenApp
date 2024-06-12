@@ -74,6 +74,9 @@
        01  DATE1                       PIC X(10) VALUE SPACES.
 
 
+       01  INSRTPGM                    PIC X(08) VALUE 'INSRTPGM'.
+
+
       * Error Message Structure
        01  ERROR-MSG.
            03 EM-DATE                  PIC X(8)  VALUE SPACES.
@@ -112,9 +115,7 @@
       * ODM data structure definitions                                 *
       *----------------------------------------------------------------*
       * ODM supplied copybooks
-       01 WS-REASON-CODES.
-           COPY HBRC.
-           COPY HBRWS.
+       01 WS-REASON-CODES PIC X.
 
       * Copybook to pass data to business rule execution server
            COPY LGCMARER.
@@ -202,6 +203,10 @@
               MOVE 'HBRCONN ' TO WS-HBR-CALL
               PERFORM ODM-ERROR-ROUTINE
            END-IF
+
+      * Call Sample PL1 Program
+	       MOVE 'INSRTPGM'   TO INSRTPGM
+           CALL INSRTPGM.
 
       * Invoke rule execution server
            CALL 'HBRRULE' USING HBRA-CONN-AREA

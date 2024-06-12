@@ -1,0 +1,69 @@
+/* INSRTPGM:  THIS PROGRAM INSERTS ROWS INTO A DB2 TABLE              */
+ INSRTPGM: PROCEDURE OPTIONS(MAIN);                                     
+    DCL INP FILE RECORD INPUT;                                         
+    DCL SYSPRINT FILE PRINT;
+        ON ENDFILE(INP)                                                 
+           MORE_RECORDS = NO;                                           
+           CLOSE FILE(INP);                                             
+                                                                       
+    DCL MORE_RECORDS BIT (1);                                           
+    DCL NO           BIT (1) INITIAL('0'B);                             
+    DCL YES          BIT (1) INITIAL('1'B);                             
+    DCL EOUT_LC      FIXED DEC (3) INIT (0);                           
+                                                                       
+    DCL 1 DCLEMPLOYEE,                                                 
+          2 EMPNO    CHAR(06),                                         
+          2 EMPNAME  CHAR(20),                                         
+          2 EMPAGE   FIXED DECIMAL (02);                               
+                                                                       
+    DCL 1 INREC,                                                       
+          2 EMPNO    CHAR(06),                                         
+          2 FILLER1  CHAR(01) INIT (' '),                               
+          2 EMPNAME  CHAR(20),                                         
+          2 FILLER2  CHAR(01) INIT (' '),                               
+          2 EMPAGE   FIXED DECIMAL (02),                               
+          2 FILLER3  CHAR(50) INIT (' ');                               
+                                                                       
+   DCL 1 SQLCA,                                                         
+         2 SQLCAID       CHAR(8),                                       
+         2 SQLCABC       FIXED(31) BINARY,                             
+         2 SQLCODE       FIXED(31) BINARY,                             
+         2 SQLERRM       CHAR(70) VAR,                                 
+         2 SQLERRP       CHAR(8),                                       
+         2 SQLERRD(6)    FIXED(31) BINARY,
+         2 SQLWARN,                                                     
+           3 SQLWARN0    CHAR(1),                                       
+           3 SQLWARN1    CHAR(1),                                       
+           3 SQLWARN2    CHAR(1),                                       
+           3 SQLWARN3    CHAR(1),                                       
+           3 SQLWARN4    CHAR(1),                                       
+           3 SQLWARN5    CHAR(1),                                       
+           3 SQLWARN6    CHAR(1),                                       
+           3 SQLWARN7    CHAR(1),                                       
+           3 SQLWARN8    CHAR(1),                                       
+           3 SQLWARN9    CHAR(1),                                       
+           3 SQLWARNA    CHAR(1),                                       
+         2 SQLSTATE      CHAR(5);                                       
+                                                                       
+    MORE_RECORDS = YES;                                                 
+    OPEN FILE (INP);                                                   
+         READ FILE (INP) INTO (INREC);                     
+         DO WHILE(MORE_RECORDS);                                       
+            EXEC SQL                                                   
+                 INSERT INTO EMPLOYEE VALUES (                         
+                                              :EMPNO    ,               
+                                              :ENMPNAME ,               
+                                              :EMPAGE                   
+                                             );                         
+                                                                       
+            IF SQLCODE = 0 THEN                                         
+               DO;                                                     
+                 PUT SKIP LIST ('RECORD INSERTED');                     
+                 EOUT_LC = EOUT_LC + 1;                                 
+               END;                                                     
+                                                                       
+            EXEC SQL COMMIT ;                                           
+            READ FILE (INP) INTO (INREC);                                 
+         END;                                                           
+         PUT SKIP LIST ('TOTAL RECORDS INSERTED :',EOUT_LC);           
+ END INSRTPGM;     

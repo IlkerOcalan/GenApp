@@ -1,23 +1,9 @@
+       PROCESS SQL
       ******************************************************************
       *                                                                *
-      * LICENSED MATERIALS - PROPERTY OF IBM                           *
-      *                                                                *
-      * "RESTRICTED MATERIALS OF IBM"                                  *
-      *                                                                *
-      * CB12                                                           *
-      *                                                                *
-      * (C) COPYRIGHT IBM CORP. 2011, 2013 ALL RIGHTS RESERVED         *
-      *                                                                *
-      * US GOVERNMENT USERS RESTRICTED RIGHTS - USE, DUPLICATION,      *
-      * OR DISCLOSURE RESTRICTED BY GSA ADP SCHEDULE                   *
-      * CONTRACT WITH IBM CORPORATION                                  *
-      *                                                                *
+      * (C) Copyright IBM Corp. 2011, 2021                             *
       *                                                                *
       *                     UPDATE customer details                    *
-      *                                                                *
-      *                                                                *
-      *                                                                *
-      *                                                                *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -75,8 +61,6 @@
            03 EM-VARIABLE.
              05 FILLER                 PIC X(6)  VALUE ' CNUM='.
              05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
-             05 FILLER                 PIC X(6)  VALUE ' PNUM='.
-             05 EM-POLNUM              PIC X(10)  VALUE SPACES.
              05 EM-SQLREQ              PIC X(16) VALUE SPACES.
              05 FILLER                 PIC X(9)  VALUE ' SQLCODE='.
              05 EM-SQLRC               PIC +9(5) USAGE DISPLAY.

@@ -1,23 +1,12 @@
+       PROCESS SQL
       ******************************************************************
       *                                                                *
-      * LICENSED MATERIALS - PROPERTY OF IBM                           *
-      *                                                                *
-      * "RESTRICTED MATERIALS OF IBM"                                  *
-      *                                                                *
-      * CB12                                                           *
-      *                                                                *
-      * (C) COPYRIGHT IBM CORP. 2011, 2013 ALL RIGHTS RESERVED         *
-      *                                                                *
-      * US GOVERNMENT USERS RESTRICTED RIGHTS - USE, DUPLICATION,      *
-      * OR DISCLOSURE RESTRICTED BY GSA ADP SCHEDULE                   *
-      * CONTRACT WITH IBM CORPORATION                                  *
-      *                                                                *
+      * (C) Copyright IBM Corp. 2011, 2021                             *
       *                                                                *
       *                    ADD Customer                                *
-
-      *   To add customer's password to the secutity table with        *
-      *  details. Default password is BD5 checksum                     *
       *                                                                *
+      *   To add customer's password to the security table with        *
+      *  details. Default password is BD5 checksum                     *
       *                                                                *
       ******************************************************************
        IDENTIFICATION DIVISION.
@@ -60,8 +49,6 @@
            03 EM-VARIABLE.
              05 FILLER                 PIC X(6)  VALUE ' CNUM='.
              05 EM-CUSNUM              PIC X(10)  VALUE SPACES.
-             05 FILLER                 PIC X(6)  VALUE ' PNUM='.
-             05 EM-POLNUM              PIC X(10)  VALUE SPACES.
              05 EM-SQLREQ              PIC X(16) VALUE SPACES.
              05 FILLER                 PIC X(9)  VALUE ' SQLCODE='.
              05 EM-SQLRC               PIC +9(5) USAGE DISPLAY.
@@ -70,17 +57,10 @@
            03 FILLER                   PIC X(9)  VALUE 'COMMAREA='.
            03 CA-DATA                  PIC X(90) VALUE SPACES.
       *----------------------------------------------------------------*
-       77 WS-CS-PASSWORD               PIC X(16) Value 'NewPass'.
-       77 WS-CS-STATE                  PIC X     VALUE 'N'.
-       77 WS-CA-COUNT                  PIC S9(9) COMP  Value 0.
 
       *----------------------------------------------------------------*
       * Definitions required for data manipulation                     *
       *----------------------------------------------------------------*
-      * Fields to be used to check that commarea is correct length
-       01  WS-COMMAREA-LENGTHS.
-           03 WS-CA-HEADER-LEN         PIC S9(4) COMP VALUE +18.
-           03 WS-REQUIRED-CA-LEN       PIC S9(4)      VALUE +0.
 
       *    Include copybook for defintion of customer details length
            COPY LGPOLICY.
@@ -105,6 +85,10 @@
       * SQLCA DB2 communications area
            EXEC SQL
                INCLUDE SQLCA
+           END-EXEC.
+      * CUSTOMER_SECURE table
+           EXEC SQL
+               INCLUDE CUSECURE
            END-EXEC.
 
       ******************************************************************
